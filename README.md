@@ -1,2 +1,3 @@
+# FSJS Techdegree Project 1
 # javascript-techdegree-project-1
- First Techdegree Project - Full Stack JavaScript
+ Techdegree Project #1 - Full Stack JavaScript
