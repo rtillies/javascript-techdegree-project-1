@@ -3,22 +3,27 @@ Treehouse FSJS Techdegree:
 project 1 - A Random Quote Generator
 ******************************************/
 
+/***
+ *   Author:  Richard Tillies
+ *     Date:  February 25, 2021
+ *  Purpose:  Generate and display quotations randomly onto a webpage.
+ *            The quote and background will refresh automatically or by clicking a button on the page.
+ ***/
+
 // For assistance: 
   // Check the "Project Resources" section of the project instructions
   // Reach out in your Slack community - https://treehouse-fsjs-102.slack.com/app_redirect?channel=chit-chat
 
 /*** 
  * `quotes` array
- * Each quote contains
+ * Each object in the array contains
  *    quote:    the actual words of the quotation
  *    source:   name of the speaker of the quotation
+ * Optionally, each quote may also contain
  *    year:     the year the quotation was spoken
  *    citation: where the quotation can be found
+ *    tags:     used for categorizing each quotation
 ***/
-
-// Auto refresh the page every few seconds
-setInterval(printQuote, 5000);
-
 let quotes = [
   {
     quote: "Hello? Is it me you're looking for?",
@@ -74,6 +79,9 @@ let quotes = [
 // return a random number between 0 and one less than the given number (n-1)
 const randomNum = (number) => Math.floor(Math.random() * number);
 
+// Auto refresh the page every few seconds
+setInterval(printQuote, 5000);
+
 /***
  * `getRandomQuote` function
  * Return a random quote object from the quotes[] array
@@ -83,28 +91,41 @@ function getRandomQuote(array) {
   return array[randomNum(array.length)];
 }
 
+/***
+ * `getRGB` function
+ * Return a six-digit RGB code for changing the background color
+***/
 function getRGB(max) {
+  // ensure that max is no more than 255
   if (!max || max > 255) { max = 255; }
 
-  let red = randomNum(max);
-  let green = randomNum(max);
-  let blue = randomNum(max);
+  // local variables for RGB
+  let red, green, blue;
+
+  // generate random values for each color
+  red = randomNum(max);
+  green = randomNum(max);
+  blue = randomNum(max);
   rgbText = `rgb(${red}, ${green}, ${blue})`;
+  
   console.log(rgbText);
   return rgbText;
 }
 
-// add a HTML <style> tag to the <head> tag
+/***
+ * `addStyle` function
+ * add a HTML <style> tag to the <head> tag
+***/
 let hasStyle = false;
 
 function addStyle() {
-  if (hasStyle) {
-    console.log("Style tag already present");
-  } else {
+  if (!hasStyle) {
     let head = document.querySelector('head');
     head.innerHTML += `<style></style>`;
     hasStyle = true;
     console.log("Style tag added");
+  } else {
+    console.log("Style tag already present");
   }
 
   let style = document.querySelector('style');
@@ -116,15 +137,7 @@ function addStyle() {
  ***/
 function changeBGcolor() {
   style = addStyle();
-  style.innerHTML = `body { background-color: ${getRGB(150)} }`;
-}
-
-function autoRefresh(time) {
-  if (!time)        { time = 10000; }
-  if (time > 20000) { time = 20000; }
-  if (time < 5000)  { time = 5000; }
-
-  setInterval(printQuote, time);
+  style.innerHTML = `body { background-color: ${getRGB(150)} }`; // relatively dark color
 }
 
 /***
@@ -156,13 +169,12 @@ function printQuote() {
 
   if (myQuote.tags) {
     info += `<br /><span class="tags" style="color: #CCC">`;
-    info += `| ${myQuote.tags.join(' | ')} |</span>`;
+    info += `${myQuote.tags.join(' | ')}</span>`;
   }
 
   // close HTML paragraph tag and output to HTML page
   info += '</p>';
   quoteBox.innerHTML = info; 
-  
 
   console.log(info);
 }
