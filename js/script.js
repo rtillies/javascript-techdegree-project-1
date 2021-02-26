@@ -96,8 +96,8 @@ function getRandomQuote(array) {
  * Return a six-digit RGB code for changing the background color
 ***/
 function getRGB(max) {
-  // ensure that max is no more than 255
-  if (!max || max > 255) { max = 255; }
+  // ensure that max is no more than 256
+  if (!max || max > 256) { max = 256; }
 
   // local variables for RGB
   let red, green, blue;
