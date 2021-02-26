@@ -113,12 +113,14 @@ function getRGB(max) {
 }
 
 /***
- * `addStyle` function
- * add a HTML <style> tag to the <head> tag
-***/
+ * `changeBGcolor` function
+ * change the background color of the HTML page
+ ***/
 let hasStyle = false;
 
-function addStyle() {
+function changeBGcolor() {
+  // check for the presence of an HTML <style> tag within the <head> tag
+  // if not present, add <style> tag to <head> tag
   if (!hasStyle) {
     let head = document.querySelector('head');
     head.innerHTML += `<style></style>`;
@@ -128,16 +130,12 @@ function addStyle() {
     console.log("Style tag already present");
   }
 
+  // Select the <style> tag and generate a new color
   let style = document.querySelector('style');
-  return style;
-}
-/***
- * `changeBGcolor` function
- * change the background color of the HTML page
- ***/
-function changeBGcolor() {
-  style = addStyle();
-  style.innerHTML = `body { background-color: ${getRGB(150)} }`; // relatively dark color
+  let color = getRGB(150); // returns relatively dark color
+
+  // Change the background color
+  style.innerHTML = `body { background-color: ${color} }`;
 }
 
 /***
